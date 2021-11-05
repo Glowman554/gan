@@ -11,7 +11,7 @@ async function __run__(gmfile_obj, task_obj, file) {
 	if (file) {
 		while (window.async_exec.tasks.length >= window.async_exec.num_tasks_max) {
 			console.log("async_exec: too many tasks waiting...");
-			await new Promise(resolve => setTimeout(resolve, 10));
+			await new Promise(resolve => setTimeout(resolve, 100));
 		}
 
 		console.log("async_exec: adding task");
@@ -30,16 +30,19 @@ async function __run__(gmfile_obj, task_obj, file) {
 			});
 
 			console.log("async_exec: task complete");
-			window.async_exec.tasks = window.async_exec.tasks.filter(task => task === this_func);
+			var element_idx = window.async_exec.tasks.findIndex(task => task === this_func);
+			window.async_exec.tasks.splice(element_idx, 1);
 		})();
 
 		window.async_exec.tasks.push(this_func);
+
 	} else {
-		console.log("async_exec: waiting for tasks...");
-		for (let task of window.async_exec.tasks) {
-			await task;
+		while (window.async_exec.tasks.length) {
+			console.log("async_exec: waiting for tasks...");
+			await new Promise(resolve => setTimeout(resolve, 1));
 		}
 
+		console.log("async_exec: all tasks complete deleting window.async_exec");
 		delete window.async_exec;
 	}
 }
