@@ -10,7 +10,7 @@ __pycache__**
 
 # gan stuff
 models/**
-pretrained/**
+pretrained**
 dataset.npz
 images/**
 generated_images/**

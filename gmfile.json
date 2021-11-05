@@ -24,11 +24,20 @@
                 "python model/generate.py --img_height ${img_height} --img_width ${img_width} --batch --count 25"
             ],
             "allow_fail": false
+        },
+        "download_pretrained": {
+            "commands": [
+                "wget https://github.com/Glowman554/gan/releases/download/${pretrained_version}/pretrained.zip -O pretrained.zip",
+                "unzip pretrained.zip",
+				"rm pretrained.zip -v"
+            ],
+            "allow_fail": false
         }
     },
     "variables": {
         "img_width": "50",
         "img_height": "50",
-        "train_epochs": "1000"
+        "train_epochs": "1000",
+        "pretrained_version": "v1"
     }
 }
