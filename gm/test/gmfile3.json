@@ -1,0 +1,16 @@
+{
+    "name": "test3",
+    "description": "test gm",
+    "author": "glowman554",
+    "version": "0.0.1",
+    "tasks": {
+		"test_include_2": {
+			"commands": [
+                "echo second include worked!"
+            ]
+		} 
+    },
+    "variables": {
+		"include_variable": "this is from gmfile3.json"
+    }
+}

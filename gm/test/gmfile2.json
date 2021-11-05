@@ -1,0 +1,21 @@
+{
+    "name": "test2",
+    "description": "test gm",
+    "author": "glowman554",
+    "version": "0.0.1",
+	"include": [
+		"gmfile3.json"
+	],
+    "tasks": {
+		"test_include": {
+			"commands": [
+                "echo include worked! ${include_variable}"
+            ],
+			"depend": [
+				"test_include_2"
+			]
+		} 
+    },
+    "variables": {
+    }
+}

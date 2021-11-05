@@ -1,6 +1,30 @@
 import getFiles from "https://deno.land/x/getfiles/mod.ts";
+import { merge_obj } from "./utils.js";
 
+export function load_gmfile(file_path) {
+	var gmfile_obj = {};
 
+	var gmfile_json = Deno.readTextFileSync(file_path);
+	gmfile_obj = JSON.parse(gmfile_json);
+
+	if (gmfile_obj.include) {
+		for (var i = 0; i < gmfile_obj.include.length; i++) {
+			console.log(`Including file: ${gmfile_obj.include[i]}`);
+			var subfile = load_gmfile(gmfile_obj.include[i]);
+			
+			delete subfile.name;
+			delete subfile.description;
+			delete subfile.author;
+			delete subfile.version;
+			delete subfile.include;
+
+			gmfile_obj = merge_obj(gmfile_obj, subfile);
+
+		}
+	}
+
+	return gmfile_obj;
+}
 
 async function run_commands(commands, allow_failure = false) {
 	for (let command of commands) {

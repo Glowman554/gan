@@ -3,6 +3,9 @@
     "description": "test gm",
     "author": "glowman554",
     "version": "0.0.1",
+	"include": [
+		"gmfile2.json"
+	],
     "tasks": {
         "task0": {
             "commands": [
@@ -53,7 +56,8 @@
                 "fail",
                 "test_variables",
                 "run_for_test",
-				"findall_test"
+				"findall_test",
+				"test_include"
             ],
             "run_in": "test_dir2"
         },

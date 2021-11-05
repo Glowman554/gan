@@ -1,4 +1,4 @@
-import { execute_gm_task, print_gmfile_info } from "./gmfile.js";
+import { execute_gm_task, load_gmfile, print_gmfile_info } from "./gmfile.js";
 import { to_bool } from "./utils.js";
 
 async function main() {
@@ -21,7 +21,7 @@ async function main() {
 
 				console.log("Running tasks:", tasks.join(", "));
 		
-				var gmfile = JSON.parse(Deno.readTextFileSync("gmfile.json"));
+				var gmfile = load_gmfile("gmfile.json")
 		
 				for (var i = 0; i < tasks.length; i++) {
 					await execute_gm_task(gmfile, tasks[i]);
@@ -31,7 +31,7 @@ async function main() {
 		
 		case "info":
 			{
-				var gmfile = JSON.parse(Deno.readTextFileSync("gmfile.json"));
+				var gmfile = load_gmfile("gmfile.json");
 
 				print_gmfile_info(gmfile);
 			}
@@ -44,6 +44,7 @@ async function main() {
 					"description": "",
 					"author": "",
 					"version": "0.0.1",
+					"include": [],
 					"tasks": {},
 					"variables": {},
 				};
@@ -51,6 +52,9 @@ async function main() {
 				gmfile_obj.name = prompt("Name: ");
 				gmfile_obj.description = prompt("Description: ");
 				gmfile_obj.author = prompt("Author: ");
+
+				var include_str = prompt("Include (separated by ,): ");
+				gmfile_obj.include = (include_str != "" && include_str != null) ? include_str.split(",") : [];
 
 				var gmfile_json = JSON.stringify(gmfile_obj, null, 4);
 				Deno.writeTextFileSync("gmfile.json", gmfile_json);
