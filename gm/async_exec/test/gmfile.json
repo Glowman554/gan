@@ -1,0 +1,48 @@
+{
+    "name": "async_test",
+    "description": null,
+    "author": "glowman554",
+    "version": "0.0.1",
+    "include": [],
+    "tasks": {
+        "test_internal": {
+            "commands": [],
+            "commands_async": [
+                "cat ${file}"
+            ],
+            "allow_fail": false,
+            "run_for": "txt",
+            "run_js": "/usr/gm/async.js"
+        },
+        "setup_test": {
+            "commands": [
+                "deno run -A init_test_files.js"
+            ],
+            "allow_fail": false
+        },
+        "await_async": {
+            "commands": [],
+            "allow_fail": false,
+            "run_js": "/usr/gm/async.js"
+        },
+        "test": {
+            "commands": [],
+            "allow_fail": false,
+            "run_after": [
+                "await_async",
+				"cleanup"
+            ],
+            "depend": [
+                "setup_test",
+                "test_internal"
+            ]
+        },
+        "cleanup": {
+            "commands": [
+                "rm ${findall txt}"
+            ],
+            "allow_fail": false
+        }
+    },
+    "variables": {}
+}

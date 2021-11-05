@@ -1,0 +1,45 @@
+{
+    "name": "async",
+    "description": "A simple async execution engine for gm",
+    "author": "glowman554",
+    "version": "0.0.1",
+    "include": [],
+    "tasks": {
+        "bundle": {
+            "commands": [
+                "deno bundle index.js index.bundle.js"
+            ],
+            "allow_fail": false
+        },
+        "install": {
+            "commands": [
+                "sudo mkdir -p /usr/gm/",
+                "sudo cp index.bundle.js /usr/gm/async.js -v"
+            ],
+            "depend": [
+                "bundle"
+            ],
+            "run_after": [
+                "cleanup"
+            ],
+            "allow_fail": false
+        },
+        "cleanup": {
+            "commands": [
+                "rm -v index.bundle.js"
+            ],
+            "allow_fail": true
+        },
+        "test": {
+            "commands": [
+                "gm run test"
+            ],
+            "depend": [
+                "install"
+            ],
+            "run_in": "test",
+            "allow_fail": false
+        }
+    },
+    "variables": {}
+}
