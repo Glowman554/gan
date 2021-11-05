@@ -19,11 +19,14 @@ async function __run__(gmfile_obj, task_obj, file) {
 		let this_func = (async () => {
 			let commands = task_obj.commands_async.map(command => command.replace(/\${file}/gm, file));
 
-			lookup_findall(task_obj);
-			lookup_variables(gmfile_obj, task_obj);
+			let fake_task_obj = Object.assign({}, task_obj);
+			fake_task_obj.commands = commands;
 
-			await run_in_dir(task_obj, async () => {
-				await run_commands(commands, task_obj.allow_fail);
+			lookup_findall(fake_task_obj);
+			lookup_variables(gmfile_obj, fake_task_obj);
+
+			await run_in_dir(fake_task_obj, async () => {
+				await run_commands(fake_task_obj.commands, task_obj.allow_fail);
 			});
 
 			console.log("async_exec: task complete");

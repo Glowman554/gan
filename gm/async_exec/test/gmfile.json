@@ -8,7 +8,8 @@
         "test_internal": {
             "commands": [],
             "commands_async": [
-                "cat ${file}"
+                "cat ${file}",
+				"echo ${test}"
             ],
             "allow_fail": false,
             "run_for": "txt",
@@ -30,7 +31,7 @@
             "allow_fail": false,
             "run_after": [
                 "await_async",
-				"cleanup"
+                "cleanup"
             ],
             "depend": [
                 "setup_test",
@@ -44,5 +45,7 @@
             "allow_fail": false
         }
     },
-    "variables": {}
+    "variables": {
+        "test": "test value"
+    }
 }
