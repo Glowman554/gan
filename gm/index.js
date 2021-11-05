@@ -81,7 +81,7 @@ async function main() {
 					"run_in": (run_in != "" && run_in != null) ? run_in : undefined,
 					"allow_fail": allow_fail,
 					"run_for": (run_for != "" && run_for != null) ? run_for : undefined,
-					"run_js": (run_js != "" && run_js != null) ? Deno.readTextFileSync(run_js) : undefined,
+					"run_js": (run_js != "" && run_js != null) ? run_js : undefined,
 				};
 
 				gmfile_obj.tasks[task_name] = task_obj;
