@@ -78,6 +78,32 @@ async function run_task_after(gmfile_obj, task_obj) {
 	}
 }
 
+function lookup_findall(task_obj) {
+	for (var x = 0; x < task_obj.commands.length; x++) {
+		var command = task_obj.commands[x];
+
+		var findall_in_command = command.match(/\$\{findall [A-Za-z0-9_]+\}/g);
+
+		if (findall_in_command !== null) {
+			for (var j = 0; j < findall_in_command.length; j++) {
+				var extension_to_search = findall_in_command[j].substring(10, findall_in_command[j].length - 1);
+
+				var files_found = [];
+				var files = getFiles(".");
+
+				for (var k = 0; k < files.length; k++) {
+					if (files[k].ext == extension_to_search) {
+						files_found.push(files[k].path);
+					}
+				}
+
+				console.log(`Found ${files_found.length} files with extension ${extension_to_search}`);
+				task_obj.commands[x] = command.replace(findall_in_command[j], files_found.join(" "));
+			}
+		}
+	}
+}
+
 export async function execute_gm_task(gmfile_obj, task_name) {
 	var task_obj = gmfile_obj.tasks[task_name];
 
@@ -114,6 +140,7 @@ export async function execute_gm_task(gmfile_obj, task_name) {
 
 				task_obj_copy.commands = task_obj.commands.map(command => command.replace(/\${file}/gm, files[i].path));
 
+				lookup_findall(task_obj_copy);
 				lookup_variables(gmfile_obj, task_obj_copy);
 
 				await run_in_dir(task_obj_copy, async () => {
@@ -127,6 +154,7 @@ export async function execute_gm_task(gmfile_obj, task_name) {
 
 		console.log("Running task: " + task_name);
 
+		lookup_findall(task_obj);
 		lookup_variables(gmfile_obj, task_obj);
 
 		await run_in_dir(task_obj, async () => {

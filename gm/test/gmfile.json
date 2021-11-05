@@ -52,7 +52,8 @@
                 "task3",
                 "fail",
                 "test_variables",
-				"run_for_test"
+                "run_for_test",
+				"findall_test"
             ],
             "run_in": "test_dir2"
         },
@@ -72,7 +73,13 @@
                 "echo running for ${file}"
             ],
             "allow_fail": false,
-			"run_for": "txt"
+            "run_for": "txt"
+        },
+        "findall_test": {
+            "commands": [
+                "echo ${findall txt}"
+            ],
+            "allow_fail": false
         }
     },
     "variables": {
