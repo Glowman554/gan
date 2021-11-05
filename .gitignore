@@ -1,0 +1,17 @@
+# gm stuff
+
+gm/index.bundle*
+gm/test/test_dir**
+
+# python stuff
+__pycache__**
+*.pyc
+*.pyo
+
+# gan stuff
+models/**
+pretrained/**
+dataset.npz
+images/**
+generated_images/**
+image.png

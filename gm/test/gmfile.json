@@ -1,0 +1,74 @@
+{
+    "name": "test",
+    "description": "test gm",
+    "author": "glowman554",
+    "version": "0.0.1",
+    "tasks": {
+        "task0": {
+            "commands": [
+                "cat test.txt"
+            ],
+            "run_in": "test_dir"
+        },
+        "task1": {
+            "commands": [
+                "echo a",
+                "echo b"
+            ],
+            "depend": [
+                "task0"
+            ]
+        },
+        "task2": {
+            "commands": [
+                "echo c",
+                "echo d"
+            ]
+        },
+        "task3": {
+            "commands": [
+                "echo e",
+                "echo f"
+            ],
+            "depend": [
+                "task1",
+                "task2"
+            ],
+            "run_after": [
+                "run_after_test"
+            ]
+        },
+        "fail": {
+            "commands": [
+                "false"
+            ],
+            "allow_fail": true
+        },
+        "test": {
+            "commands": [
+                "cat test.txt"
+            ],
+            "depend": [
+                "task3",
+                "fail",
+				"test_variables"
+            ],
+            "run_in": "test_dir2"
+        },
+        "run_after_test": {
+            "commands": [
+                "echo i should run after task3"
+            ]
+        },
+        "test_variables": {
+            "commands": [
+                "echo ${test_value} ${test_value_2}"
+            ],
+            "allow_fail": false
+        }
+    },
+	"variables": {
+		"test_value": "im a variable lol",
+		"test_value_2": "im a variable lol 2"
+	}
+}

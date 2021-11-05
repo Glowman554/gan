@@ -1,0 +1,60 @@
+{
+    "name": "gm",
+    "description": "A simple task manager",
+    "author": "glowman554",
+    "version": "0.0.1",
+    "tasks": {
+        "bundle": {
+            "commands": [
+                "deno bundle index.js index.bundle.js"
+            ]
+        },
+        "compile": {
+            "commands": [
+                "deno compile -A index.bundle.js"
+            ],
+            "depend": [
+                "bundle"
+            ]
+        },
+        "install": {
+            "commands": [
+                "sudo cp index.bundle /bin/gm -v"
+            ],
+            "depend": [
+                "compile"
+            ]
+        },
+        "cleanup": {
+            "commands": [
+                "rm -v index.bundle.js",
+                "rm -v index.bundle",
+				"rm -rfv test/test_dir",
+				"rm -rfv test/test_dir2"
+            ]
+        },
+        "test": {
+            "commands": [
+                "../index.bundle info",
+                "../index.bundle run test"
+            ],
+            "depend": [
+                "compile",
+				"test_setup"
+            ],
+            "run_in": "test",
+			"run_after": [
+				"cleanup"
+			]
+        },
+        "test_setup": {
+            "commands": [
+                "mkdir test_dir -pv",
+				"curl https://glowman554.gq/ping -o test_dir/test.txt",
+				"mkdir test_dir2 -pv",
+				"curl https://glowman554.gq/ping -o test_dir2/test.txt"
+            ],
+			"run_in": "test"
+        }
+    }
+}

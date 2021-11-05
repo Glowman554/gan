@@ -1,0 +1,34 @@
+{
+    "name": "GAN",
+    "description": "My simple implementation of a gan model",
+    "author": "glowman554",
+    "version": "0.0.1",
+    "tasks": {
+        "build": {
+            "commands": [
+                "python model/dataset.py --img_height ${img_height} --img_width ${img_width}"
+            ],
+            "allow_fail": false
+        },
+        "train": {
+            "commands": [
+                "python model/train.py --img_height ${img_height} --img_width ${img_width} --num_epochs ${train_epochs}"
+            ],
+            "depend": [
+                "build"
+            ],
+            "allow_fail": false
+        },
+        "generate": {
+            "commands": [
+                "python model/generate.py --img_height ${img_height} --img_width ${img_width} --batch --count 25"
+            ],
+            "allow_fail": false
+        }
+    },
+    "variables": {
+        "img_width": "50",
+        "img_height": "50",
+        "train_epochs": "1000"
+    }
+}
