@@ -12,7 +12,7 @@
         },
         "train": {
             "commands": [
-                "python model/train.py --img_height ${img_height} --img_width ${img_width} --num_epochs ${train_epochs}"
+                "python model/train.py --img_height ${img_height} --img_width ${img_width} --num_epochs ${train_epochs} ${restore}"
             ],
             "depend": [
                 "build"
@@ -29,7 +29,7 @@
             "commands": [
                 "wget https://github.com/Glowman554/gan/releases/download/${pretrained_version}/pretrained.zip -O pretrained.zip",
                 "unzip pretrained.zip",
-				"rm pretrained.zip -v"
+                "rm pretrained.zip -v"
             ],
             "allow_fail": false
         }
@@ -38,6 +38,7 @@
         "img_width": "50",
         "img_height": "50",
         "train_epochs": "1000",
-        "pretrained_version": "v1"
+        "pretrained_version": "v1",
+        "restore": ""
     }
 }
