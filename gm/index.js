@@ -67,13 +67,15 @@ async function main() {
 				var run_after = prompt("Run after task (separated by ,): ");
 				var run_in = prompt("Run in: ");
 				var allow_fail = to_bool(prompt("Allow fail: "));
+				var run_for = prompt("Run for (file extension without .): ");
 
 				var task_obj = {
 					"commands": task_command.split(",").map(function(command) { return command.trim(); }),
 					"depend": (task_depend != "" && task_depend != null) ? task_depend.split(",").map(function(depend) { return depend.trim(); }) : undefined,
 					"run_after": (run_after != "" && run_after != null) ? run_after.split(",").map(function(run_after) { return run_after.trim(); }) : undefined,
 					"run_in": (run_in != "" && run_in != null) ? run_in : undefined,
-					"allow_fail": allow_fail
+					"allow_fail": allow_fail,
+					"run_for": run_for,
 				};
 
 				gmfile_obj.tasks[task_name] = task_obj;

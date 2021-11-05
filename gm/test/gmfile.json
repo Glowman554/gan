@@ -51,7 +51,8 @@
             "depend": [
                 "task3",
                 "fail",
-				"test_variables"
+                "test_variables",
+				"run_for_test"
             ],
             "run_in": "test_dir2"
         },
@@ -65,10 +66,17 @@
                 "echo ${test_value} ${test_value_2}"
             ],
             "allow_fail": false
+        },
+        "run_for_test": {
+            "commands": [
+                "echo running for ${file}"
+            ],
+            "allow_fail": false,
+			"run_for": "txt"
         }
     },
-	"variables": {
-		"test_value": "im a variable lol",
-		"test_value_2": "im a variable lol 2"
-	}
+    "variables": {
+        "test_value": "im a variable lol",
+        "test_value_2": "im a variable lol 2"
+    }
 }
