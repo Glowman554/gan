@@ -128,6 +128,20 @@ function lookup_findall(task_obj) {
 	}
 }
 
+async function run_embedded_code(gmfile_obj, task_obj, file = undefined) {
+	if (task_obj.run_js) {
+		console.log("Running embedded code in file: " + task_obj.run_js);
+
+		var code_to_run = Deno.readTextFileSync(task_obj.run_js);
+
+		{
+			await new Promise((resolve, reject) => {
+				eval(code_to_run + "\n\n\n __run__(gmfile_obj, task_obj, file).then(resolve);");
+			});
+		}
+	}
+}
+
 export async function execute_gm_task(gmfile_obj, task_name) {
 	var task_obj = gmfile_obj.tasks[task_name];
 
@@ -170,6 +184,8 @@ export async function execute_gm_task(gmfile_obj, task_name) {
 				await run_in_dir(task_obj_copy, async () => {
 					await run_commands(task_obj_copy.commands, task_obj_copy.allow_fail);
 				});
+
+				await run_embedded_code(gmfile_obj, task_obj_copy, files[i].path);
 			}
 		}
 
@@ -184,6 +200,8 @@ export async function execute_gm_task(gmfile_obj, task_name) {
 		await run_in_dir(task_obj, async () => {
 			await run_commands(task_obj.commands, task_obj.allow_fail);
 		});
+
+		await run_embedded_code(gmfile_obj, task_obj);
 
 		await run_task_after(gmfile_obj, task_obj);
 	}

@@ -3,9 +3,9 @@
     "description": "test gm",
     "author": "glowman554",
     "version": "0.0.1",
-	"include": [
-		"gmfile2.json"
-	],
+    "include": [
+        "gmfile2.json"
+    ],
     "tasks": {
         "task0": {
             "commands": [
@@ -56,8 +56,10 @@
                 "fail",
                 "test_variables",
                 "run_for_test",
-				"findall_test",
-				"test_include"
+                "findall_test",
+                "test_include",
+                "test_run_js",
+                "run_js_for_test"
             ],
             "run_in": "test_dir2"
         },
@@ -84,6 +86,17 @@
                 "echo ${findall txt}"
             ],
             "allow_fail": false
+        },
+        "test_run_js": {
+            "commands": [],
+            "allow_fail": false,
+            "run_js": "../test_embed/index.bundle.js"
+        },
+        "run_js_for_test": {
+            "commands": [],
+            "allow_fail": false,
+            "run_for": "txt",
+            "run_js": "../test_embed/index.bundle.js"
         }
     },
     "variables": {

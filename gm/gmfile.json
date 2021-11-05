@@ -29,9 +29,11 @@
             "commands": [
                 "rm -v index.bundle.js",
                 "rm -v index.bundle",
-				"rm -rfv test/test_dir",
-				"rm -rfv test/test_dir2"
-            ]
+                "rm -rfv test/test_dir",
+                "rm -rfv test/test_dir2",
+                "rm -v test_embed/index.bundle.js"
+            ],
+			"allow_fail": true
         },
         "test": {
             "commands": [
@@ -40,21 +42,29 @@
             ],
             "depend": [
                 "compile",
-				"test_setup"
+                "test_setup",
+				"test_embed_setup"
             ],
             "run_in": "test",
-			"run_after": [
-				"cleanup"
-			]
+            "run_after": [
+                "cleanup"
+            ]
         },
         "test_setup": {
             "commands": [
                 "mkdir test_dir -pv",
-				"curl https://glowman554.gq/ping -o test_dir/test.txt",
-				"mkdir test_dir2 -pv",
-				"curl https://glowman554.gq/ping -o test_dir2/test.txt"
+                "curl https://glowman554.gq/ping -o test_dir/test.txt",
+                "mkdir test_dir2 -pv",
+                "curl https://glowman554.gq/ping -o test_dir2/test.txt"
             ],
-			"run_in": "test"
+            "run_in": "test"
+        },
+        "test_embed_setup": {
+            "commands": [
+                "gm run bundle"
+            ],
+            "run_in": "test_embed",
+            "allow_fail": false
         }
     }
 }

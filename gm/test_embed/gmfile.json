@@ -1,0 +1,13 @@
+{
+    "name": "gm test embed",
+    "description": "",
+    "author": "glowman554",
+    "version": "0.0.1",
+    "tasks": {
+        "bundle": {
+            "commands": [
+                "deno bundle index.js index.bundle.js"
+            ]
+        }
+    }
+}
